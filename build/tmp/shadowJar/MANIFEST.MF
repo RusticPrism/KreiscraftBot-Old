@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Built-By: Anwender
+Main-Class: de.rusticprism.kreiscraftbot.KreiscraftBot
+Build-Timestamp: 2022-12-22T18:10:07.316+0100
+Created-By: Gradle 7.4
+Build-Jdk: 18.0.2.1 (Oracle Corporation 18.0.2.1+1-1)
+Build-OS: Windows 10 amd64 10.0
+
