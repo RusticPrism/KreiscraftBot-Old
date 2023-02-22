@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class CommandListener extends ListenerAdapter {
     @Override
@@ -26,7 +27,11 @@ public class CommandListener extends ListenerAdapter {
                             channel.sendMessageEmbeds(EmbedCreator.createembed("Unbekanntes Commando", Color.decode("#f22613"))).queue();
                         }
                     }
-                }else event.getMessage().delete().queue();
+                }else {
+                    event.getMessage().replyEmbeds(EmbedCreator.createembed("This is not the Bot-channel", Color.red))
+                            .complete().delete().queueAfter(15, TimeUnit.SECONDS);
+                    event.getMessage().delete().queue();
+                }
             }
         }
 

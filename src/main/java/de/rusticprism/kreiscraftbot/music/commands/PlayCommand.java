@@ -25,7 +25,8 @@ public class PlayCommand extends Command {
 
             String url = stringBuilder.toString().trim();
             if(!url.toLowerCase().startsWith("https")) url = "ytsearch:" + url;
-            KreiscraftBot.bot.getPlayerManager().loadItemOrdered(message.getGuild(),url,new ResultHandler(message.getGuild(),m, message));
+            Message response = message.replyEmbeds(EmbedCreator.builder("Searching for [`" + stringBuilder.substring(0,stringBuilder.length() - 1) + "`]", Color.ORANGE).build()).complete();
+            KreiscraftBot.bot.getPlayerManager().loadItemOrdered(message.getGuild(),url,new ResultHandler(message.getGuild(),m, response));
         }else channel.sendMessageEmbeds(EmbedCreator.createembed("Please use "+ Prefix.getPrefix(channel.getGuild()) +"play <url>!",Color.red)).queue();
     }
 }

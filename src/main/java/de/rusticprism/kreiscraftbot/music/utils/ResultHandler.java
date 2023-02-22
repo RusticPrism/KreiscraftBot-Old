@@ -35,11 +35,11 @@ public class ResultHandler implements AudioLoadResultHandler {
 
         //Join VoiceChannel of Member
         if (user.getVoiceState().getChannel() == null) {
-            message.replyEmbeds(EmbedCreator.createembed("You are not connected to any VoiceChannel!", Color.red)).queue();
+            message.editMessageEmbeds(EmbedCreator.createembed("You are not connected to any VoiceChannel!", Color.red)).queue();
             return;
         }
         if (user.getVoiceState().isDeafened()) {
-            message.replyEmbeds(EmbedCreator.createembed("How do you wan´t to listen to music if you are deafened!", Color.red)).queue();
+            message.editMessageEmbeds(EmbedCreator.createembed("How do you wan´t to listen to music if you are deafened!", Color.red)).queue();
             return;
         }
         guild.getAudioManager().openAudioConnection(user.getVoiceState().getChannel());
@@ -47,8 +47,8 @@ public class ResultHandler implements AudioLoadResultHandler {
         EmbedCreator creator = EmbedCreator.builder(null,
                         "**Successfully added [" + track.getInfo().title + "](" + track.getInfo().uri + ") [`" + FormatUtil.formatTime(track.getDuration()) + "`]** " +
                         "\n *Requested by " + user.getUser().getAsMention() + "*", Color.GREEN)
-                .setAuthor(guild.getName() + " - Requested");
-        message.replyEmbeds(creator.build())
+                .setAuthor(guild.getName() + " - Requested",guild.getIconUrl());
+        message.editMessageEmbeds(creator.build())
                 .complete()
                 .delete().queueAfter(15, TimeUnit.SECONDS);
         handler.addTrack(new QueuedTrack(track, user.getUser()), message.getChannel());

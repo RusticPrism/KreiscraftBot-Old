@@ -14,9 +14,16 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.ItemComponent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 import java.awt.*;
@@ -122,7 +129,13 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
                 .setThumbnail("https://img.youtube.com/vi/"+ videourl1 + "/hqdefault.jpg")
                 .setAuthor(textChannel.getGuild().getName() + " - " + "Now Playing", textChannel.getGuild().getIconUrl())
                 .setDescription(":arrow_forward: **[" + track.getInfo().title + "](" + track.getInfo().uri + ")** - [`" + FormatUtil.formatTime(track.getDuration()) + "`]\n" + "Volume: `" + player.getVolume() + "`");
-       textChannel.sendMessageEmbeds(creator.build()).queue();
+      textChannel.sendMessageEmbeds(creator.build())
+              .addActionRow(
+                      Button.of(ButtonStyle.PRIMARY,"quieter-button", Emoji.fromUnicode("U+1F509")),
+                      Button.of(ButtonStyle.DANGER, "end-button",Emoji.fromUnicode("U+2716")),
+                      Button.of(ButtonStyle.DANGER, "pause-button", Emoji.fromUnicode("U+23F8")),
+                      Button.of(ButtonStyle.PRIMARY, "louder-button", Emoji.fromUnicode("U+1F50A")))
+              .queue();
     }
 
 

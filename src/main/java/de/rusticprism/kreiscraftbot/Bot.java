@@ -5,10 +5,10 @@ import de.rusticprism.kreiscraftbot.music.audio.PlayerManager;
 import de.rusticprism.kreiscraftbot.utils.BotConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.internal.utils.JDALogger;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.logging.Logger;
 
 public class Bot {
     private final ScheduledExecutorService threadpool;
@@ -21,7 +21,6 @@ public class Bot {
         this.threadpool = Executors.newSingleThreadScheduledExecutor();
         this.manager = new PlayerManager(this);
         this.manager.init();
-        KreiscraftBot.logger = Logger.getLogger("KreiscraftBot");
     }
 
     public BotConfig getConfig(Guild guild) {

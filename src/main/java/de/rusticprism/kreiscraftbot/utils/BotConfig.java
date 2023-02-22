@@ -56,7 +56,7 @@ public class BotConfig {
             // close reader
             reader.close();
         } catch (IOException e) {
-            KreiscraftBot.logger.log(Level.CONFIG,"Couldn't read Config File", e.getCause());
+            KreiscraftBot.logger.warn("Couldn't read Config File");
         }
     }
     public void save() {
@@ -72,7 +72,7 @@ public class BotConfig {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            KreiscraftBot.logger.log(Level.CONFIG,"Couldn't save Config File", e.getCause());
+            KreiscraftBot.logger.warn("Couldn't save Config File");
         }
     }
     public void set(@NotNull String path, @NotNull String value) {
@@ -102,7 +102,7 @@ public class BotConfig {
             try {
                 file1.createNewFile();
             } catch (IOException e) {
-                KreiscraftBot.logger.log(Level.CONFIG,"Couldn't create Config file", e.getCause());
+                KreiscraftBot.logger.warn("Couldn't create Config file");
                 e.printStackTrace();
             }
         }
