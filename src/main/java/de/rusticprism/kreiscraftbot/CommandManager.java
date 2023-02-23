@@ -29,6 +29,7 @@ public class CommandManager {
         registerCommand(new PlayCommand());
         registerCommand(new SkipCommand());
         registerCommand(new ClearQueueCommand());
+        registerCommand(new AdminCommand());
 
         //SlashCommands
         registerSlashCommand(new EmbedCommand());
