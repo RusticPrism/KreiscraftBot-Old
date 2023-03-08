@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Built-By: Anwender
 Main-Class: de.rusticprism.kreiscraftbot.KreiscraftBot
-Build-Timestamp: 2023-02-23T20:05:36.602+0100
+Build-Timestamp: 2023-02-23T21:15:38.612+0100
 Created-By: Gradle 7.4
 Build-Jdk: 17.0.2 (Oracle Corporation 17.0.2+8-86)
 Build-OS: Windows 10 amd64 10.0
