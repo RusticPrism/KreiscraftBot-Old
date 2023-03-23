@@ -99,12 +99,13 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     // Audio Events
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+        System.out.println(endReason);
         if(endReason == AudioTrackEndReason.REPLACED) return;
         RepeatMode repeatMode = RepeatMode.valueOf(KreiscraftBot.bot.getConfig(Objects.requireNonNull(KreiscraftBot.bot.getJDA().getGuildById(guildId))).getRepeat());
         // if the track ended normally, and we're in repeat mode, re-add it to the queue
         if (endReason == AudioTrackEndReason.FINISHED && repeatMode != RepeatMode.OFF) {
             QueuedTrack clone = new QueuedTrack(track.makeClone(), track.getUserData(RequestMetadata.class));
-            if (repeatMode == RepeatMode.ALL)
+            if (repeatMode == RepeatMode.QUEUE)
                 queue.add(clone);
             else queue.addAt(0, clone);
         }

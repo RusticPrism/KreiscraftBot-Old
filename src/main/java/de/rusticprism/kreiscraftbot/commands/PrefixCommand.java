@@ -1,6 +1,7 @@
 package de.rusticprism.kreiscraftbot.commands;
 
-import de.rusticprism.kreiscraftbot.settings.Prefix;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.PrefixConfig;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import de.rusticprism.kreiscraftbot.utils.OptionBuilder;
 import de.rusticprism.kreiscraftbot.utils.OptionList;
@@ -18,12 +19,12 @@ public class PrefixCommand extends SlashCommand{
     }
     @Override
     public void performCommand(Member m, TextChannel channel, SlashCommandInteraction interaction) {
-        if(!m.hasPermission(Permission.ADMINISTRATOR)) {
-            interaction.replyEmbeds(EmbedCreator.createembed("NoPermission","You don´t have the Permission to perfrom that Command", Color.RED)).setEphemeral(true).queue();
-        return;
+        if (!m.hasPermission(Permission.ADMINISTRATOR)) {
+            interaction.replyEmbeds(EmbedCreator.createembed("NoPermission", "You don´t have the Permission to perfrom that Command", Color.RED)).setEphemeral(true).queue();
+            return;
         }
-            Prefix.setPrefix(channel.getGuild(),interaction.getOption("prefix").getAsString());
-            interaction.replyEmbeds(EmbedCreator.createembed("Successfully set the Prefix to " + Prefix.getPrefix(channel.getGuild()), Color.green)).queue();
+        ConfigManager.getConfig(PrefixConfig.class).setPrefix(channel.getGuild(), interaction.getOption("prefix").getAsString());
+        interaction.replyEmbeds(EmbedCreator.createembed("Successfully set the Prefix to " + ConfigManager.getConfig(PrefixConfig.class).getPrefix(channel.getGuild()), Color.green)).queue();
     }
 
 }

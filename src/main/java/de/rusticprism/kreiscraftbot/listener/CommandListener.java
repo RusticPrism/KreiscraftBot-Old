@@ -1,7 +1,8 @@
 package de.rusticprism.kreiscraftbot.listener;
 
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
-import de.rusticprism.kreiscraftbot.settings.Prefix;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.PrefixConfig;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -19,7 +20,7 @@ public class CommandListener extends ListenerAdapter {
 
         if(event.isFromType(ChannelType.TEXT) && !event.getMessage().isEdited()) {
             TextChannel channel = event.getChannel().asTextChannel();
-            if(message.startsWith(Prefix.getPrefix(channel.getGuild()))) {
+            if (message.startsWith(ConfigManager.getConfig(PrefixConfig.class).getPrefix(channel.getGuild()))) {
                 String[] args = message.substring(1).split(" ");
                 if (KreiscraftBot.configs.get(channel.getGuild().getIdLong()).get("Botchannel") == null || KreiscraftBot.configs.get(channel.getGuild().getIdLong()).get("Botchannel").equals(channel.getId())) {
                     if (args.length > 0) {
@@ -27,7 +28,7 @@ public class CommandListener extends ListenerAdapter {
                             channel.sendMessageEmbeds(EmbedCreator.createembed("Unbekanntes Commando", Color.decode("#f22613"))).queue();
                         }
                     }
-                }else {
+                } else {
                     event.getMessage().replyEmbeds(EmbedCreator.createembed("This is not the Bot-channel", Color.red))
                             .complete().delete().queueAfter(15, TimeUnit.SECONDS);
                     event.getMessage().delete().queue();

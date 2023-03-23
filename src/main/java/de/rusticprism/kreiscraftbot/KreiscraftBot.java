@@ -16,6 +16,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -66,7 +67,6 @@ public class KreiscraftBot {
                     .setBulkDeleteSplittingEnabled(true)
                     .build();
             bot.setJDA(jda);
-
         } catch (IllegalArgumentException ex) {
             logger.warn("Error while Logging in!");
             System.exit(1);

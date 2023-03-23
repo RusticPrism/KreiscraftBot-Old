@@ -1,5 +1,7 @@
 package de.rusticprism.kreiscraftbot;
 
+import de.rusticprism.kreiscraftbot.config.Config;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
 import de.rusticprism.kreiscraftbot.music.audio.AudioHandler;
 import de.rusticprism.kreiscraftbot.music.audio.PlayerManager;
 import de.rusticprism.kreiscraftbot.utils.BotConfig;
@@ -72,12 +74,6 @@ public class Bot {
 
     public void loadConfig() {
         // load config
-        for (Guild guild : getJDA().getGuilds()) {
-            BotConfig config = new BotConfig(guild);
-            if(config.get("Prefix") == null) {
-                config.writeDefaultFile();
-            }
-            KreiscraftBot.configs.put(guild.getIdLong(), config);
-        }
+        new ConfigManager();
     }
 }

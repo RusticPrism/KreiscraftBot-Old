@@ -1,11 +1,10 @@
 package de.rusticprism.kreiscraftbot.music.commands;
 
-import com.sedmelluq.discord.lavaplayer.filter.PcmFilterFactory;
-import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
 import de.rusticprism.kreiscraftbot.commands.Command;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.PrefixConfig;
 import de.rusticprism.kreiscraftbot.music.audio.AudioHandler;
-import de.rusticprism.kreiscraftbot.settings.Prefix;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -34,17 +33,18 @@ public class VolumeCommand extends Command {
                         .complete().delete().queueAfter(15, TimeUnit.SECONDS);
                 return;
             }
-            if(Integer.parseInt(args[1]) >200) {
+            if (Integer.parseInt(args[1]) > 200) {
                 channel.sendMessageEmbeds(EmbedCreator.createembed("You cannot set the Volume higher than 200!", Color.RED))
                         .complete().delete().queueAfter(15, TimeUnit.SECONDS);
                 return;
             }
             AudioHandler handler = KreiscraftBot.bot.getPlayerManager().setUpHandler(channel.getGuild());
             handler.getPlayer().setVolume(Integer.parseInt(args[1]));
-            channel.sendMessageEmbeds(EmbedCreator.createembed("Successfully set the Volume to " + Integer.parseInt(args[1]),Color.GREEN))
+            channel.sendMessageEmbeds(EmbedCreator.createembed("Successfully set the Volume to " + Integer.parseInt(args[1]), Color.GREEN))
                     .complete().delete().queueAfter(15, TimeUnit.SECONDS);
 
-        }else channel.sendMessageEmbeds(EmbedCreator.createembed("Please use " + Prefix.getPrefix(channel.getGuild()) + "volume <Volume>!",Color.red))
-                .complete().delete().queueAfter(15, TimeUnit.SECONDS);
+        } else
+            channel.sendMessageEmbeds(EmbedCreator.createembed("Please use " + ConfigManager.getConfig(PrefixConfig.class).getPrefix(channel.getGuild()) + "volume <Volume>!", Color.red))
+                    .complete().delete().queueAfter(15, TimeUnit.SECONDS);
     }
 }

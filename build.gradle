@@ -17,8 +17,12 @@ repositories {
 dependencies {
     implementation("net.dv8tion:JDA:5.0.0-beta.5")
     implementation("com.sedmelluq:lavaplayer:1.3.78")
-    implementation("com.google.code.gson:gson:2.10")
-    implementation("net.imagej:ij:1.53h")
+    implementation('com.google.code.gson:gson:2.10.1')
+    implementation('net.imagej:ij:1.54c')
+    implementation('org.yaml:snakeyaml:2.0')
+    implementation("com.google.guava:guava:31.1-jre")
+
+
 }
 
 test {
