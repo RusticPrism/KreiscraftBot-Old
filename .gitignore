@@ -3,3 +3,4 @@
 /.idea/
 /gradle/
 .gradle
+/src/main/java/de/rusticprism/kreiscraftbot/token/
