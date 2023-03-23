@@ -3,6 +3,7 @@ package de.rusticprism.kreiscraftbot.music.commands;
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
 import de.rusticprism.kreiscraftbot.commands.Command;
 import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.MusicConfig;
 import de.rusticprism.kreiscraftbot.config.PrefixConfig;
 import de.rusticprism.kreiscraftbot.music.audio.AudioHandler;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
@@ -40,6 +41,7 @@ public class VolumeCommand extends Command {
             }
             AudioHandler handler = KreiscraftBot.bot.getPlayerManager().setUpHandler(channel.getGuild());
             handler.getPlayer().setVolume(Integer.parseInt(args[1]));
+            ConfigManager.getConfig(MusicConfig.class).setVolume(Integer.parseInt(args[1]));
             channel.sendMessageEmbeds(EmbedCreator.createembed("Successfully set the Volume to " + Integer.parseInt(args[1]), Color.GREEN))
                     .complete().delete().queueAfter(15, TimeUnit.SECONDS);
 

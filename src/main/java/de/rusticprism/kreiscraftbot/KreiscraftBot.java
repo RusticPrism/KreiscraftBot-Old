@@ -22,7 +22,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class KreiscraftBot {
-    public static HashMap<Long, BotConfig> configs;
     public static Logger logger;
     public static CommandManager cmdMan;
     public static Bot bot;
@@ -41,7 +40,6 @@ public class KreiscraftBot {
 
     public static void startBot(String tokenname) {
         // create prompt to handle startup
-        configs = new HashMap<>();
         KreiscraftBot.logger = LoggerFactory.getLogger(KreiscraftBot.class);
         if(!tokens.containsKey(tokenname)) {
             System.out.println("Could´nt find token (" + tokenname + ")");

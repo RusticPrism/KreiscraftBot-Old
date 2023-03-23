@@ -7,12 +7,49 @@ import net.dv8tion.jda.api.entities.Guild;
 
 public class MusicConfig extends Config {
 
+    private boolean stayinchannel = false;
+    private RepeatMode repeatMode = RepeatMode.OFF;
+    private int volume = 150;
+    private long botchannel = 0;
+
+    public long getBotchannel() {
+        return botchannel;
+    }
+
+    public void setBotchannel(long botchannel) {
+        this.botchannel = botchannel;
+    }
+
+    public boolean isStayinchannel() {
+        return stayinchannel;
+    }
+
+    public void setStayinchannel(boolean stayinchannel) {
+        this.stayinchannel = stayinchannel;
+    }
+
+    public RepeatMode getRepeatMode() {
+        return repeatMode;
+    }
+
+    public void setRepeatMode(RepeatMode repeatMode) {
+        this.repeatMode = repeatMode;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+
     /*
-    guildid:
-            repeatmode: OFF
-            stayinchannel: false
-            volume: 150
-     */
+        guildid:
+                repeatmode: OFF
+                stayinchannel: false
+                volume: 150
+         */
     public MusicConfig() {
         super("MusicConfig");
     }
@@ -21,9 +58,9 @@ public class MusicConfig extends Config {
     public void createDefault() {
         FileConfiguration config = getConfig();
         for (Guild guild : KreiscraftBot.bot.getJDA().getGuilds()) {
-            config.set(guild.getId() + ".repeatmode", RepeatMode.OFF);
-            config.set(guild.getId() + ".stayinchannel", false);
-            config.set(guild.getId() + ".volume", 150);
+            config.set(guild.getId() + ".repeatmode", repeatMode);
+            config.set(guild.getId() + ".stayinchannel", stayinchannel);
+            config.set(guild.getId() + ".volume", volume);
         }
     }
 }

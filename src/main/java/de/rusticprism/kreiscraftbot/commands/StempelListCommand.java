@@ -1,6 +1,9 @@
 package de.rusticprism.kreiscraftbot.commands;
 
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
+import de.rusticprism.kreiscraftbot.config.Config;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.StempelConfig;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import de.rusticprism.kreiscraftbot.utils.OptionBuilder;
 import de.rusticprism.kreiscraftbot.utils.OptionList;
@@ -31,11 +34,11 @@ public class StempelListCommand extends SlashCommand {
             StringBuilder ranglistbuilder = new StringBuilder();
             int num = 4;
             for(int i = 3; i <10; i++) {
-                if(ranglist10[i] == null || Integer.parseInt(KreiscraftBot.configs.get(channel.getGuild().getIdLong()).getStempel(ranglist10[i].getId()))==0) {
+                if (ranglist10[i] == null || ConfigManager.getConfig(StempelConfig.class).getStempel(channel.getGuild(), ranglist10[i].getId()) == 0) {
                     continue;
                 }
-                ranglistbuilder.append(num).append(". ").append(ranglist10[i].getUser().getAsMention()).append(": ").append( KreiscraftBot.configs.get(channel.getGuild().getIdLong()).getStempel(member.getId())).append("\n");
-                num = num +1;
+                ranglistbuilder.append(num).append(". ").append(ranglist10[i].getUser().getAsMention()).append(": ").append(ConfigManager.getConfig(StempelConfig.class).getStempel(channel.getGuild(), member.getId())).append("\n");
+                num = num + 1;
             }
             interaction.replyFiles(FileUpload.fromData(StempelUtil.getPodest(ranglist[0] == null ? "Empty" : ranglist[0]
                     , ranglist[1] == null ? "Empty" : ranglist[1],ranglist[2] == null ? "Empty" : ranglist[2]))).queue();
@@ -48,7 +51,7 @@ public class StempelListCommand extends SlashCommand {
                     .replace(">", "")
                     .replace("@", ""));
             interaction.replyEmbeds(EmbedCreator.createembed("Der User **" + name.getName() + "** hat **"
-                    + KreiscraftBot.bot.getConfig(channel.getGuild()).getStempel(String.valueOf(name.getIdLong())) + "** Stempel ", Color.GREEN)).queue();
+                    + ConfigManager.getConfig(StempelConfig.class).getStempel(channel.getGuild(), String.valueOf(name.getIdLong())) + "** Stempel ", Color.GREEN)).queue();
         }
     }
 }

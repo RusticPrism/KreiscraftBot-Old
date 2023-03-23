@@ -5,32 +5,25 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
-import de.rusticprism.kreiscraftbot.KreiscraftBot;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.MusicConfig;
 import de.rusticprism.kreiscraftbot.queue.FairQueue;
 import de.rusticprism.kreiscraftbot.settings.RepeatMode;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import de.rusticprism.kreiscraftbot.utils.FormatUtil;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.ItemComponent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
-import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class AudioHandler extends AudioEventAdapter implements AudioSendHandler {
 
@@ -101,7 +94,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         System.out.println(endReason);
         if(endReason == AudioTrackEndReason.REPLACED) return;
-        RepeatMode repeatMode = RepeatMode.valueOf(KreiscraftBot.bot.getConfig(Objects.requireNonNull(KreiscraftBot.bot.getJDA().getGuildById(guildId))).getRepeat());
+        RepeatMode repeatMode = ConfigManager.getConfig(MusicConfig.class).getRepeatMode();
         // if the track ended normally, and we're in repeat mode, re-add it to the queue
         if (endReason == AudioTrackEndReason.FINISHED && repeatMode != RepeatMode.OFF) {
             QueuedTrack clone = new QueuedTrack(track.makeClone(), track.getUserData(RequestMetadata.class));
@@ -111,7 +104,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
         }
 
         if (queue.isEmpty()) {
-            if (!manager.getBot().getConfig(Objects.requireNonNull(KreiscraftBot.bot.getJDA().getGuildById(guildId))).getStay())
+            if (!ConfigManager.getConfig(MusicConfig.class).isStayinchannel())
                 manager.getBot().closeAudioConnection(guildId);
             // unpause, in the case when the player was paused and the track has been skipped.
             // this is to prevent the player being paused next time it's being used.

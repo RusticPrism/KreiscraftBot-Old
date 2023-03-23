@@ -1,6 +1,8 @@
 package de.rusticprism.kreiscraftbot.commands;
 
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.StempelConfig;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import de.rusticprism.kreiscraftbot.utils.OptionBuilder;
 import de.rusticprism.kreiscraftbot.utils.OptionList;
@@ -34,7 +36,7 @@ public class StempelSlashCommand extends SlashCommand{
             interaction.replyEmbeds(EmbedCreator.createembed("Du kannst keinem Bot einen Stempel geben!",Color.red)).queue();
             return;
         }
-        KreiscraftBot.bot.getConfig(channel.getGuild()).addStempel(String.valueOf(user.getIdLong()));
+        ConfigManager.getConfig(StempelConfig.class).addStempel(channel.getGuild(), String.valueOf(user.getIdLong()));
         interaction.replyEmbeds(EmbedCreator.createembed("Ein Stempel wurde dem User \"**" + user.getName() + "**\" hinzugefügt!", Color.GREEN)).queue();
     }
 }

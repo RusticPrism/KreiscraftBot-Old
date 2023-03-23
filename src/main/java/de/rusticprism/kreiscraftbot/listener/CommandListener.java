@@ -2,6 +2,7 @@ package de.rusticprism.kreiscraftbot.listener;
 
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
 import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.MusicConfig;
 import de.rusticprism.kreiscraftbot.config.PrefixConfig;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
@@ -22,7 +23,7 @@ public class CommandListener extends ListenerAdapter {
             TextChannel channel = event.getChannel().asTextChannel();
             if (message.startsWith(ConfigManager.getConfig(PrefixConfig.class).getPrefix(channel.getGuild()))) {
                 String[] args = message.substring(1).split(" ");
-                if (KreiscraftBot.configs.get(channel.getGuild().getIdLong()).get("Botchannel") == null || KreiscraftBot.configs.get(channel.getGuild().getIdLong()).get("Botchannel").equals(channel.getId())) {
+                if (ConfigManager.getConfig(MusicConfig.class).getBotchannel() == channel.getIdLong()) {
                     if (args.length > 0) {
                         if (!KreiscraftBot.cmdMan.perform(args[0], event.getMember(), channel, event.getMessage())) {
                             channel.sendMessageEmbeds(EmbedCreator.createembed("Unbekanntes Commando", Color.decode("#f22613"))).queue();

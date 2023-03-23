@@ -24,11 +24,6 @@ public class Bot {
         this.manager = new PlayerManager(this);
         this.manager.init();
     }
-
-    public BotConfig getConfig(Guild guild) {
-        return KreiscraftBot.configs.get(guild.getIdLong());
-    }
-
     public ScheduledExecutorService getThreadpool() {
         return threadpool;
     }
@@ -48,7 +43,7 @@ public class Bot {
     }
 
     public void shutdown() {
-        KreiscraftBot.configs.forEach((guildid, botConfig) -> botConfig.save());
+        ConfigManager.configs.stream().forEach(Config::saveConfig);
         if (shuttingDown)
             return;
         shuttingDown = true;
@@ -72,8 +67,4 @@ public class Bot {
     }
 
 
-    public void loadConfig() {
-        // load config
-        new ConfigManager();
-    }
 }

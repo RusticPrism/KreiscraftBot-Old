@@ -3,6 +3,7 @@ package de.rusticprism.kreiscraftbot.music.commands;
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
 import de.rusticprism.kreiscraftbot.commands.Command;
 import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.MusicConfig;
 import de.rusticprism.kreiscraftbot.config.PrefixConfig;
 import de.rusticprism.kreiscraftbot.music.utils.ResultHandler;
 import de.rusticprism.kreiscraftbot.utils.EmbedCreator;
@@ -28,6 +29,7 @@ public class PlayCommand extends Command {
             if (!url.toLowerCase().startsWith("https")) url = "ytsearch:" + url;
             Message response = message.replyEmbeds(EmbedCreator.builder("Searching for [`" + stringBuilder.substring(0, stringBuilder.length() - 1) + "`]", Color.ORANGE).build()).complete();
             KreiscraftBot.bot.getPlayerManager().loadItemOrdered(message.getGuild(), url, new ResultHandler(message.getGuild(), m, response));
+            KreiscraftBot.bot.getPlayerManager().setUpHandler(channel.getGuild()).getPlayer().setVolume(ConfigManager.getConfig(MusicConfig.class).getVolume());
         } else
             channel.sendMessageEmbeds(EmbedCreator.createembed("Please use " + ConfigManager.getConfig(PrefixConfig.class).getPrefix(channel.getGuild()) + "play <url>!", Color.red)).queue();
     }

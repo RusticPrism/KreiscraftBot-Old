@@ -1,6 +1,8 @@
 package de.rusticprism.kreiscraftbot.utils;
 
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
+import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.config.StempelConfig;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
@@ -44,25 +46,25 @@ public class StempelUtil {
         return file1;
     }
     public static List<String> getFirst(int amount, Guild guild) {
-        BotConfig config = KreiscraftBot.configs.get(guild.getIdLong());
-        HashMap<Member,Integer> stempel = new HashMap<>();
+        StempelConfig config = ConfigManager.getConfig(StempelConfig.class);
+        HashMap<Member, Integer> stempel = new HashMap<>();
         for (Member user : guild.getMembers()) {
             if(user.getUser().isBot() || user.getUser().isSystem()) {
                 continue;
             }
-            stempel.put(user, Integer.valueOf(config.getStempel(user.getId())));
+            stempel.put(user, config.getStempel(guild, user.getId()));
         }
         stempel = sortMap(stempel);
         return stempel.keySet().stream().limit(amount).map(member -> member.getNickname() == null || member.getNickname().length() > 10 ? member.getUser().getName() : member.getNickname()).toList();
     }
     public static List<Member> getFirstMember(int amount, Guild guild) {
-        BotConfig config = KreiscraftBot.configs.get(guild.getIdLong());
-        HashMap<Member,Integer> stempel = new HashMap<>();
+        StempelConfig config = ConfigManager.getConfig(StempelConfig.class);
+        HashMap<Member, Integer> stempel = new HashMap<>();
         for (Member user : guild.getMembers()) {
             if(user.getUser().isBot() || user.getUser().isSystem()) {
                 continue;
             }
-            stempel.put(user, Integer.valueOf(config.getStempel(user.getId())));
+            stempel.put(user, config.getStempel(guild, user.getId()));
         }
         stempel = sortMap(stempel);
         return stempel.keySet().stream().limit(amount).toList();
