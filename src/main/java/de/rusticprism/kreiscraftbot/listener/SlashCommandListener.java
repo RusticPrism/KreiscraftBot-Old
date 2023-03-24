@@ -16,7 +16,7 @@ public class SlashCommandListener extends ListenerAdapter {
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         if (event.isFromGuild()) {
             TextChannel textChannel = event.getChannel().asTextChannel();
-            if (ConfigManager.getConfig(MusicConfig.class).getBotchannel() == event.getChannel().getIdLong()) {
+            if (ConfigManager.getConfig(MusicConfig.class).getBotchannel(event.getGuild()) == event.getChannel().getIdLong()) {
                 if (!KreiscraftBot.cmdMan.performSlash(event.getName(), event.getMember(), textChannel, event.getInteraction())) {
                     event.replyEmbeds(EmbedCreator.createembed("Unbekanntes Commando", Color.decode("#f22613"))).queue();
                 }

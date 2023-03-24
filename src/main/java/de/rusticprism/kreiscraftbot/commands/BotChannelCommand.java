@@ -27,17 +27,17 @@ public class BotChannelCommand extends SlashCommand{
             return;
         }
         if(interaction.getOption("channel") == null) {
-            interaction.replyEmbeds(EmbedCreator.createembed("The Botchannel is " + channel.getGuild().getTextChannelById(ConfigManager.getConfig(MusicConfig.class).getBotchannel()).getAsMention(), Color.green)).setEphemeral(true).queue();
+            interaction.replyEmbeds(EmbedCreator.createembed("The Botchannel is " + channel.getGuild().getTextChannelById(ConfigManager.getConfig(MusicConfig.class).getBotchannel(channel.getGuild())).getAsMention(), Color.green)).setEphemeral(true).queue();
             return;
         }
         String option = interaction.getOption("channel").getAsString();
         if(channel.getGuild().getTextChannelsByName(option,true).size() == 1) {
            TextChannel channel1 = channel.getGuild().getTextChannelsByName(option,true).get(0);
-            ConfigManager.getConfig(MusicConfig.class).setBotchannel(channel1.getIdLong());
+            ConfigManager.getConfig(MusicConfig.class).setBotchannel(channel.getGuild(), channel1.getIdLong());
             interaction.replyEmbeds(EmbedCreator.createembed("Set the Botchannel to " + channel1.getAsMention(), Color.green)).setEphemeral(true).queue();
         }else if(channel.getGuild().getTextChannelsByName(option,true).size() >1) {
             TextChannel channel1 = channel.getGuild().getTextChannelsByName(option,true).get(0);
-            ConfigManager.getConfig(MusicConfig.class).setBotchannel(channel1.getIdLong());
+            ConfigManager.getConfig(MusicConfig.class).setBotchannel(channel.getGuild(), channel1.getIdLong());
             interaction.replyEmbeds(EmbedCreator.createembed("There is more than one channel with this name. Taking the first one(" + channel1.getAsMention() + ")!", Color.green)).setEphemeral(true).queue();
         }else {
             interaction.replyEmbeds(EmbedCreator.createembed("There is no channel with this name!",Color.red)).setEphemeral(true).queue();

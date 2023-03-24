@@ -23,7 +23,9 @@ public class CommandListener extends ListenerAdapter {
             TextChannel channel = event.getChannel().asTextChannel();
             if (message.startsWith(ConfigManager.getConfig(PrefixConfig.class).getPrefix(channel.getGuild()))) {
                 String[] args = message.substring(1).split(" ");
-                if (ConfigManager.getConfig(MusicConfig.class).getBotchannel() == channel.getIdLong()) {
+                System.out.println(ConfigManager.getConfig(MusicConfig.class).getBotchannel(channel.getGuild()));
+                System.out.println(channel.getIdLong());
+                if (ConfigManager.getConfig(MusicConfig.class).getBotchannel(channel.getGuild()) == channel.getIdLong()) {
                     if (args.length > 0) {
                         if (!KreiscraftBot.cmdMan.perform(args[0], event.getMember(), channel, event.getMessage())) {
                             channel.sendMessageEmbeds(EmbedCreator.createembed("Unbekanntes Commando", Color.decode("#f22613"))).queue();
