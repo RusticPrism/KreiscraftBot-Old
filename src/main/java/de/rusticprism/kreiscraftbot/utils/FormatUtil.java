@@ -58,12 +58,12 @@ public class FormatUtil {
     
     public static String listOfVChannels(List<VoiceChannel> list, String query)
     {
-        String out = " Multiple voice channels found matching \""+query+"\":";
-        for(int i=0; i<6 && i<list.size(); i++)
-            out+="\n - "+list.get(i).getAsMention()+" (ID:"+list.get(i).getId()+")";
-        if(list.size()>6)
-            out+="\n**And "+(list.size()-6)+" more...**";
-        return out;
+        StringBuilder out = new StringBuilder(" Multiple voice channels found matching \"" + query + "\":");
+        for (int i = 0; i < 6 && i < list.size(); i++)
+            out.append("\n - ").append(list.get(i).getAsMention()).append(" (ID:").append(list.get(i).getId()).append(")");
+        if (list.size() > 6)
+            out.append("\n**And ").append(list.size() - 6).append(" more...**");
+        return out.toString();
     }
     
     public static String listOfRoles(List<Role> list, String query)
@@ -78,9 +78,9 @@ public class FormatUtil {
     
     public static String filter(String input)
     {
-        return input.replace("\u202E","")
-                .replace("@everyone", "@\u0435veryone") // cyrillic letter e
-                .replace("@here", "@h\u0435re") // cyrillic letter e
+        return input.replace("\u202E", "")
+                .replace("@everyone", "@еveryone") // cyrillic letter e
+                .replace("@here", "@hеre") // cyrillic letter e
                 .trim();
     }
 }
