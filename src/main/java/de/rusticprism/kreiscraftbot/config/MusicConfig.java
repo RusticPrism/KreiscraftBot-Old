@@ -25,7 +25,7 @@ public class MusicConfig extends Config {
     }
 
     public RepeatMode getRepeatMode(Guild guild) {
-        return RepeatMode.valueOf(getConfig().getString(guild.getId() + ".repeatmode"));
+        return RepeatMode.OFF;
     }
 
     public void setRepeatMode(Guild guild, RepeatMode repeatMode) {

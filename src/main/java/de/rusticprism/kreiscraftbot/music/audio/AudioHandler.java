@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
+import de.rusticprism.kreiscraftbot.KreiscraftBot;
 import de.rusticprism.kreiscraftbot.config.ConfigManager;
 import de.rusticprism.kreiscraftbot.config.MusicConfig;
 import de.rusticprism.kreiscraftbot.queue.FairQueue;
@@ -82,7 +83,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     }
 
     public boolean isMusicPlaying(JDA jda) {
-        return guild(jda).getSelfMember().getVoiceState().inAudioChannel() && audioPlayer.getPlayingTrack() != null;
+        return guild().getSelfMember().getVoiceState().inAudioChannel() && audioPlayer.getPlayingTrack() != null;
     }
 
     public AudioPlayer getPlayer() {
@@ -92,26 +93,30 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     // Audio Events
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        System.out.println(endReason);
-        if(endReason == AudioTrackEndReason.REPLACED) return;
-        RepeatMode repeatMode = ConfigManager.getConfig(MusicConfig.class).getRepeatMode(guild(channel.getJDA()));
-        // if the track ended normally, and we're in repeat mode, re-add it to the queue
-        if (endReason == AudioTrackEndReason.FINISHED && repeatMode != RepeatMode.OFF) {
-            QueuedTrack clone = new QueuedTrack(track.makeClone(), track.getUserData(RequestMetadata.class));
-            if (repeatMode == RepeatMode.QUEUE)
+        System.out.println(endReason.name());
+        RepeatMode repeatMode = ConfigManager.getConfig(MusicConfig.class).getRepeatMode(guild());
+        QueuedTrack clone = new QueuedTrack(track.makeClone(), track.getUserData(RequestMetadata.class));
+        if (endReason.equals(AudioTrackEndReason.REPLACED)) return;
+        if (endReason.equals(AudioTrackEndReason.FINISHED)) {
+            if (repeatMode == RepeatMode.QUEUE) {
                 queue.add(clone);
-            else queue.addAt(0, clone);
+                return;
+            }
+            if (repeatMode == RepeatMode.SONG) {
+                queue.addAt(0, clone);
+                return;
+            }
+            if (queue.isEmpty()) {
+                if (!ConfigManager.getConfig(MusicConfig.class).isStayinchannel(guild()))
+                    manager.getBot().closeAudioConnection(guildId);
+                player.setPaused(false);
+            } else {
+                QueuedTrack queuedTrack = queue.pull();
+                audioPlayer.playTrack(queuedTrack.getTrack());
+            }
         }
-
-        if (queue.isEmpty()) {
-            if (!ConfigManager.getConfig(MusicConfig.class).isStayinchannel(guild(channel.getJDA())))
-                manager.getBot().closeAudioConnection(guildId);
-            // unpause, in the case when the player was paused and the track has been skipped.
-            // this is to prevent the player being paused next time it's being used.
-            player.setPaused(false);
-        } else {
-            QueuedTrack qt = queue.pull();
-            audioPlayer.playTrack(qt.getTrack());
+        if (endReason == AudioTrackEndReason.LOAD_FAILED) {
+            System.out.println("LOAD FAILED");
         }
     }
 
@@ -151,7 +156,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
 
 
     // Private methods
-    private Guild guild(JDA jda) {
-        return jda.getGuildById(guildId);
+    private Guild guild() {
+        return KreiscraftBot.bot.getJDA().getGuildById(guildId);
     }
 }
