@@ -12,6 +12,9 @@ repositories {
         url 'https://m2.dv8tion.net/releases'
     }
     mavenCentral()
+    maven {
+        url "https://repo.papermc.io/repository/maven-public/"
+    }
 }
 
 dependencies {
@@ -20,9 +23,8 @@ dependencies {
     implementation('com.google.code.gson:gson:2.10.1')
     implementation('net.imagej:ij:1.54c')
     implementation('org.yaml:snakeyaml:2.0')
-    implementation("com.google.guava:guava:31.1-jre")
-
-
+    implementation('com.google.guava:guava:31.1-jre')
+    implementation('se.michaelthelin.spotify:spotify-web-api-java:8.0.0')
 }
 
 test {

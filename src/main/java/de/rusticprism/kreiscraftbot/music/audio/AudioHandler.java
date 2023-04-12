@@ -2,6 +2,7 @@ package de.rusticprism.kreiscraftbot.music.audio;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
@@ -20,6 +21,7 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
+import se.michaelthelin.spotify.SpotifyApi;
 
 import java.awt.*;
 import java.nio.ByteBuffer;

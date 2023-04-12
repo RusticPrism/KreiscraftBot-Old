@@ -5,8 +5,9 @@ import de.rusticprism.kreiscraftbot.listener.ModalListener;
 import de.rusticprism.kreiscraftbot.listener.ReadyListener;
 import de.rusticprism.kreiscraftbot.listener.SlashCommandListener;
 import de.rusticprism.kreiscraftbot.music.listener.ReactionListener;
-import de.rusticprism.kreiscraftbot.utils.OtherUtil;
+import de.rusticprism.kreiscraftbot.music.utils.SpotifyMusicPlayer;
 import de.rusticprism.kreiscraftbot.token.Tokens;
+import de.rusticprism.kreiscraftbot.utils.OtherUtil;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -44,11 +45,8 @@ public class KreiscraftBot {
             }, 20, TimeUnit.SECONDS);
             return;
         }
-
-
         // set up the listener
         bot = new Bot();
-
         try {
             JDA jda = JDABuilder.create(Tokens.valueOf(tokenname).getToken(), GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS)
                     .enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE)

@@ -3,6 +3,7 @@ package de.rusticprism.kreiscraftbot.listener;
 import de.rusticprism.kreiscraftbot.CommandManager;
 import de.rusticprism.kreiscraftbot.KreiscraftBot;
 import de.rusticprism.kreiscraftbot.config.ConfigManager;
+import de.rusticprism.kreiscraftbot.music.utils.SpotifyMusicPlayer;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

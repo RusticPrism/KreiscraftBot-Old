@@ -25,7 +25,7 @@ public class ReactionListener extends ListenerAdapter {
                       .setEphemeral(true).complete().deleteOriginal().queueAfter(15, TimeUnit.SECONDS);
               return;
           }
-          player.setVolume(player.getVolume() - 5);
+          player.setVolume(player.getVolume() - 10);
             event.replyEmbeds(EmbedCreator.createembed("Successfully set the Volume to [`" + player.getVolume() + "`]", Color.green))
                     .complete().deleteOriginal().queueAfter(15, TimeUnit.SECONDS);
           return;
@@ -57,7 +57,7 @@ public class ReactionListener extends ListenerAdapter {
                         .setEphemeral(true).complete().deleteOriginal().queueAfter(15, TimeUnit.SECONDS);
                 return;
             }
-            player.setVolume(player.getVolume() + 5);
+            player.setVolume(player.getVolume() + 10);
             event.replyEmbeds(EmbedCreator.createembed("Successfully set the Volume to [`" + player.getVolume() + "`]", Color.green))
                     .complete().deleteOriginal().queueAfter(15, TimeUnit.SECONDS);
         }
