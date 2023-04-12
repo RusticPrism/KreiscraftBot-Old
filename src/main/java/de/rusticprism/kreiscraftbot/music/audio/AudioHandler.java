@@ -25,6 +25,7 @@ import java.awt.*;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AudioHandler extends AudioEventAdapter implements AudioSendHandler {
 
@@ -93,7 +94,6 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     // Audio Events
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        System.out.println(endReason.name());
         RepeatMode repeatMode = ConfigManager.getConfig(MusicConfig.class).getRepeatMode(guild());
         QueuedTrack clone = new QueuedTrack(track.makeClone(), track.getUserData(RequestMetadata.class));
         if (endReason.equals(AudioTrackEndReason.REPLACED)) return;
@@ -116,7 +116,13 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
             }
         }
         if (endReason == AudioTrackEndReason.LOAD_FAILED) {
-            System.out.println("LOAD FAILED");
+            TextChannel textChannel = (TextChannel) channel;
+            textChannel.sendMessageEmbeds(EmbedCreator.builder("Error loading Song! Trying again in 10 Seconds...", Color.RED).build())
+                    .complete().delete().completeAfter(10, TimeUnit.SECONDS);
+            KreiscraftBot.bot.getThreadpool().schedule(() -> {
+                queue.addAt(0, clone);
+                skipTrack();
+            }, 10, TimeUnit.SECONDS);
         }
     }
 

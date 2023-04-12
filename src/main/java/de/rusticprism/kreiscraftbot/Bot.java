@@ -4,11 +4,11 @@ import de.rusticprism.kreiscraftbot.config.Config;
 import de.rusticprism.kreiscraftbot.config.ConfigManager;
 import de.rusticprism.kreiscraftbot.music.audio.AudioHandler;
 import de.rusticprism.kreiscraftbot.music.audio.PlayerManager;
-import de.rusticprism.kreiscraftbot.utils.BotConfig;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.internal.utils.JDALogger;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -17,6 +17,12 @@ public class Bot {
     private final PlayerManager manager;
 
     private boolean shuttingDown = false;
+
+    public List<Activity> activities = List.of(Activity.playing("auf kreiscraft.net")
+            , Activity.watching("kreiscraft.net/youtube")
+            , Activity.listening("kreiscraft.net/discord")
+            , Activity.playing("League of Legends")
+            , Activity.playing("Fortnite"));
     private JDA jda;
 
     public Bot() {
@@ -24,6 +30,7 @@ public class Bot {
         this.manager = new PlayerManager(this);
         this.manager.init();
     }
+
     public ScheduledExecutorService getThreadpool() {
         return threadpool;
     }

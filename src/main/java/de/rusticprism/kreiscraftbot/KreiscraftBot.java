@@ -53,7 +53,7 @@ public class KreiscraftBot {
             JDA jda = JDABuilder.create(Tokens.valueOf(tokenname).getToken(), GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS)
                     .enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE)
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOJI, CacheFlag.ONLINE_STATUS, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS)
-                    .setActivity(Activity.playing("auf kreiscraft.de"))
+                    .setActivity(Activity.playing("auf kreiscraft.net"))
                     .setStatus(OnlineStatus.ONLINE)
                     .addEventListeners(new CommandListener(), new ReadyListener(), new SlashCommandListener(), new ModalListener(), new ReactionListener())
                     .setBulkDeleteSplittingEnabled(true)
