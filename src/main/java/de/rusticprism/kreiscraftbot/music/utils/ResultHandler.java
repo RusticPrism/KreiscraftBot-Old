@@ -98,6 +98,7 @@ public class ResultHandler implements AudioLoadResultHandler {
 
     @Override
     public void loadFailed(FriendlyException e) {
+        e.printStackTrace();
         message.getChannel().sendMessageEmbeds(EmbedCreator.createembed("Error: " + e.getMessage(), Color.red)).queue();
     }
 }
