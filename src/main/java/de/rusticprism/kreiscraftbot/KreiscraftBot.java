@@ -1,6 +1,5 @@
 package de.rusticprism.kreiscraftbot;
 
-import de.rusticprism.kreiscraftbot.config.TokenConfig;
 import de.rusticprism.kreiscraftbot.listener.CommandListener;
 import de.rusticprism.kreiscraftbot.listener.ModalListener;
 import de.rusticprism.kreiscraftbot.listener.ReadyListener;
@@ -16,9 +15,6 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 public class KreiscraftBot {
     public static Logger logger;
     public static CommandManager cmdMan;
@@ -26,7 +22,7 @@ public class KreiscraftBot {
 
     public static void main(String[] args) {
             try {
-                startBot(args[0].toUpperCase());
+                startBot(args[0]);
             }catch (Exception e) {
                 OtherUtil.logError(e);
             }
@@ -35,22 +31,13 @@ public class KreiscraftBot {
     public static void startBot(String tokenname) {
         // create prompt to handle startup
         KreiscraftBot.logger = LoggerFactory.getLogger(KreiscraftBot.class);
-        if (new TokenConfig().getToken(tokenname) == null) {
-            System.out.println("Could´nt find token (" + tokenname + ")");
-            System.out.println("Shutting down in 20 Seconds!");
-            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
-                System.out.println("Shutting down...");
-                System.exit(1);
-            }, 20, TimeUnit.SECONDS);
-            return;
-        }
         // set up the listener
         bot = new Bot();
         try {
-            JDA jda = JDABuilder.create(new TokenConfig().getToken(tokenname), GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS)
+            JDA jda = JDABuilder.create(tokenname, GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS)
                     .enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE)
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOJI, CacheFlag.ONLINE_STATUS, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS)
-                    .setActivity(Activity.playing("auf kreiscraft.net"))
+                    .setActivity(Activity.playing("auf kreiscraft.de"))
                     .setStatus(OnlineStatus.ONLINE)
                     .addEventListeners(new CommandListener(), new ReadyListener(), new SlashCommandListener(), new ModalListener(), new ReactionListener())
                     .setBulkDeleteSplittingEnabled(true)
