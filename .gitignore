@@ -2,5 +2,4 @@
 /build/
 /.idea/
 /gradle/
-.gradle
-/src/main/resources/tokens.json
+src/main/resources/tokens.json
