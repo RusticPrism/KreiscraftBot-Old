@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat
 
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 group 'de.rusticprism'
@@ -18,13 +18,12 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:5.0.0-beta.5")
-    implementation("com.sedmelluq:lavaplayer:1.3.78")
+    implementation("net.dv8tion:JDA:5.0.0-beta.9")
+    implementation("com.sedmelluq:lavaplayer:1.3.77")
     implementation('com.google.code.gson:gson:2.10.1')
     implementation('net.imagej:ij:1.54c')
     implementation('org.yaml:snakeyaml:2.0')
     implementation('com.google.guava:guava:31.1-jre')
-    implementation('se.michaelthelin.spotify:spotify-web-api-java:8.0.0')
 }
 
 test {

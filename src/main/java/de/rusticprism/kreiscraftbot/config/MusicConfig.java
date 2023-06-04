@@ -56,7 +56,7 @@ public class MusicConfig extends Config {
         for (Guild guild : KreiscraftBot.bot.getJDA().getGuilds()) {
             config.set(guild.getId() + ".repeatmode", RepeatMode.OFF.getName());
             config.set(guild.getId() + ".stayinchannel", false);
-            config.set(guild.getId() + ".volume", 150);
+            config.set(guild.getId() + ".volume", 100);
             config.set(guild.getId() + ".botchannel", 0);
         }
     }

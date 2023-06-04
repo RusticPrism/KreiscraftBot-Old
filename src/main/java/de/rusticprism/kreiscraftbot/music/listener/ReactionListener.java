@@ -35,6 +35,7 @@ public class ReactionListener extends ListenerAdapter {
             handler.stopAndClear();
             event.getMessage().delete().queue();
             event.replyEmbeds(EmbedCreator.createembed("Successfully stopped the Song", Color.green)).queue();
+            event.getGuild().getAudioManager().closeAudioConnection();
         }
         if(Objects.equals(event.getButton().getId(),("pause-button"))) {
             AudioPlayer player = KreiscraftBot.bot.getPlayerManager().setUpHandler(event.getGuild()).getPlayer();
